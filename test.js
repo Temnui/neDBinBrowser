@@ -2,6 +2,10 @@ let isOdd = function(x) { return x & 1; };
 let isEven  = function(x) { return !( x & 1 ); };
 
 function codeFromPage(args) {
+    return getCodeFromDb(getArrOfPages(args));
+}
+
+function getArrOfPages(args) {
     let pages = args;
     pages = pages.replace(/ /gi,'');
     if (/[^0-9,\-]/.test(pages)){
@@ -18,9 +22,7 @@ function codeFromPage(args) {
             if(!isEven(fromTo[1])){
                 fromTo[1] --;
             }
-            console.log(fromTo);
             let pagesQuantity = fromTo[1] - fromTo[0];
-            console.log(pagesQuantity);
             for (let j = Number(fromTo[0]); j <= Number(fromTo[1]); j = j + 2) {
                 arrPages.push(j);
             }
@@ -32,7 +34,16 @@ function codeFromPage(args) {
             }
         }
     }
-    console.log(pages);
-    console.log(pages.length);
-    console.log(arrPages);
+    return arrPages;
+}
+
+function getCodeFromDb(arr) {
+    let codes = [];
+    db.find({page: {$in: arr}}, function (err, docs) {
+        for (let i = 0; i < docs.length; i++) {
+            codes.push(docs[i].fsc);
+        }
+        // docs contains the two planets Earth and Mars
+    });
+    return codes
 }
