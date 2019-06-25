@@ -6,6 +6,48 @@
     <script src="nedb.js" type="text/javascript"></script>
 </head>
 <body>
-
+<h1>Hello World</h1>
+<label>
+    <input type="text" value="Text">
+</label>
+<script src="frankenstein.js" type="text/javascript" charset="UTF-8"></script>
+<script src="test.js" type="text/javascript" charset="UTF-8"></script>
+<script>
+    let v = {
+        _id: "version",
+        version: "26062019"
+    };
+    db = new Nedb({ filename: 'avonDB', autoload: true });
+    let versionNEDB = '';
+    db.find({_id: "version"}, function (err, docs) {
+        versionNEDB = docs;
+        if (versionNEDB.length === 0){
+            console.log('write DB');
+            db.insert(myObj, function (err) {
+            });
+            db.insert(v, function (err) {
+            });
+        } else if (versionNEDB[0].version !== v.version){
+            console.log('update DB');
+            db.remove({}, { multi: true }, function (err, numRemoved) {
+            });
+            db.insert(myObj, function (err) {
+            });
+            db.insert(v, function (err) {
+            });
+        } else {
+            console.log('Current version of DB is fine');
+        }
+        // docs contains the two planets Earth and Mars
+    });
+    db.find({}, function (err, docs) {
+        console.log(docs);
+        // docs contains the two planets Earth and Mars
+    });
+    /*db.find({}, function (err, docs) {
+        console.log(docs);
+        // docs contains the two planets Earth and Mars
+    });*/
+</script>
 </body>
 </html>
