@@ -1,6 +1,7 @@
-let isOdd = function(x) { return x & 1; };
-let isEven  = function(x) { return !( x & 1 ); };
+let isEven  = function(x) { // noinspection JSBitwiseOperatorUsage
+    return !( x & 1 ); };
 
+// noinspection JSUnusedGlobalSymbols
 function codeFromPage(args) {
     return getCodeFromDb(getArrOfPages(args));
 }
@@ -22,7 +23,6 @@ function getArrOfPages(args) {
             if(!isEven(fromTo[1])){
                 fromTo[1] --;
             }
-            let pagesQuantity = fromTo[1] - fromTo[0];
             for (let j = Number(fromTo[0]); j <= Number(fromTo[1]); j = j + 2) {
                 arrPages.push(j);
             }
