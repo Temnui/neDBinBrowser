@@ -42,8 +42,13 @@ function getCodeFromDb(arr) {
     db.find({page: {$in: arr}}, function (err, docs) {
         for (let i = 0; i < docs.length; i++) {
             codes.push(docs[i].fsc);
+            if (docs[i].hasOwnProperty('shade')) {
+                for (let j = 0; j < docs[i].shade.length; j++) {
+                    codes.push(docs[i].shade[j]);
+                }
+            }
+            // todo What is fsc in shades???
         }
-        // docs contains the two planets Earth and Mars
     });
     return codes
 }
