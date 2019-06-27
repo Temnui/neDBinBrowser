@@ -2,7 +2,7 @@
     width: 950px;
     position: absolute;
     overflow: auto;
-    height: 90%;
+    height: auto;
     padding-top: 50px;
     left: 0;
     background-color: white;

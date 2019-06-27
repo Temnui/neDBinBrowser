@@ -1,7 +1,7 @@
 let listOfOffers = {};
 let specialOffers = [
     {
-        "name": "lipstick",
+        "name": "Ви виконали умови спеціальної пропозиції зі сторінок 4-13",
         "description": "descriptionLipstick",
         "footer": "footerLipstick",
         "condition": "page",
@@ -10,20 +10,20 @@ let specialOffers = [
         "offer": "page",
 
     }, {
-        "name": "life",
-        "description": "descriptionLipstick",
+        "name": "Ви виконали умови спеціальної пропозиції зі сторінок 18-19",
+        "description": "descriptionLife",
         "footer": "footerLipstick",
         "range": ["11510", "12349", "11865", "15499"]
     },
     {
         "name": "wowFR",
-        "description": "descriptionLipstick",
+        "description": "Ви виконали умови спеціальної пропозиції зі сторінок 26-31",
         "footer": "footerLipstick",
         "range": ["41908", "82271", "99194", "26594", "51609", "36419", "34116", "18397", "92070", "75678", "26640", "11967", "55144", "73469", "18973", "27537", "26371"]
     },
     {
         "name": "wowPrice",
-        "description": "descriptionLipstick",
+        "description": "Ви виконали умови спеціальної пропозиції зі сторінок 32-33",
         "footer": "footerLipstick",
         "range": ["29262", "31825", "64238", "18277", "17730", "17867", "41494", "43736", "26635", "79707", "45620", "77960", "25679", "08395", "19986", "78040", "89850", "14516", "40051", "74951", "01867", "68379", "36770", "94211", "60933", "14572"]
     }
@@ -182,11 +182,14 @@ if (page('orderEntry')) {
 }
 
 function showPopupSO() {
+    document.getElementById('SOwindow').innerHTML ='';
     console.log(listOfOffers);
-
     for (let key in listOfOffers) {
+        document.getElementById('SOwindow').innerHTML +=generateSOcontent(key);
+    }
+    /*for (let key in listOfOffers) {
         if (listOfOffers.hasOwnProperty(key)) {
-
+            let header = key;
             for (let i = 0; i < specialOffers.length; i++) {
                 // noinspection EqualityComparisonWithCoercionJS
                 if (key == specialOffers[i].name) {
@@ -195,14 +198,14 @@ function showPopupSO() {
                         console.log(docs);
                         document.getElementById('SOwindow').innerHTML = '';
                         listOfSOProducts[listOfOffers[key]] = docs;
-                        let header = 'blank';
+                        //let header = 'blank';
                         let footer = 'blank';
                         for (let j = 0; j < specialOffers.length; j++) {
-                                    // noinspection EqualityComparisonWithCoercionJS
-                                if (specialOffers[j].name == key) {
-                                        header = specialOffers[j].description;
-                                        footer = specialOffers[j].footer;
-                                }
+                            // noinspection EqualityComparisonWithCoercionJS
+                            if (specialOffers[j].name == key) {
+                                //header = specialOffers[j].description;
+                                footer = specialOffers[j].footer;
+                            }
                         }
                         for (let key in listOfSOProducts) {
                             if (listOfSOProducts.hasOwnProperty(key)) {
@@ -214,7 +217,7 @@ function showPopupSO() {
                 }
             }
         }
-    }
+    }*/
     $("#popupAboutSO").fadeIn("slow", function () {
         // done
     });
@@ -248,46 +251,18 @@ $("#divBioBottom1 > p > input").focusout(function(){
 //html
 
 function getShadeFscDesc(prod){
-    for (let i = 0; i < prod.shade.length; i++) {
 
-    }
 }
 
-function generateSOcontent(header, products, footer) {
+function generateSOcontent(header) {
     console.log('products: ');
-    console.log(products);
     let elemHeader = '<div class="all-specical-offers-div">\n' +
-        '            <div class="e-store-pop-cart-title">' + header + '</div>';
+        '            <div class="e-store-pop-cart-title">' + header + '</div></div>';
     let elemContent = '';
-    for (let i = 0; i < products.length; i++) {
-        elemContent += '<div class="e-store-pop-cart">            <div class="e-store-pop-cart-item">            <div class="e-store-pop-cart-item-num">            <span>1</span>' +
-            '                    </div>\n' +
-            '                    <div class="e-store-pop-cart-item-img">\n' +
-            '                        <img alt="" src="' + products[i].urlImg + '">\n' +
-            '                    </div>\n' +
-            '                    <div class="e-store-pop-cart-item-name">\n' +
-            '                        <div class="e-store-pop-cart-item-middle">\n' +
-            '                            <span>' + products[i].name + '</span>\n' +
-            '                            <div><select>\n' + getShadeFscDesc(products[i]) +
-            '                        </select></div>\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '\n' +
-            '                    <div class="e-store-pop-cart-item-price">\n' +
-            '                        <div>' + products[i].price + ' грн</div><span>' + products[i].oldPrice + ' грн</span>\n' +
-            '                    </div>\n' +
-            '                    <div class="e-store-pop-cart-item-delete">\n' +
-            '                        <a href="#" onclick="addSOtoOrder(\'' + products[i].fsc + '\')">Додати до замовлення</a>\n' +
-            '                    </div>\n' +
-            '                </div>\n' +
-            '            </div>';
-    }
-    let elemFooter = '<div class="specical-text">\n' + footer +
-        '            </div>';
-    return elemHeader + elemContent + elemFooter;
+    return elemHeader;
 }
 
-function addSOtoOrder(fsс) { //todo rep number price
+function addSOtoOrder(fsc) {
     for (let i = 0; i < 49; i++) {
         // noinspection EqualityComparisonWithCoercionJS
         if (document.getElementById('newItems[' + i + '].linenumber').value == '') {
@@ -303,3 +278,8 @@ function addSOtoOrder(fsс) { //todo rep number price
         }
     }
 }
+
+$("#popupMessageOverlay").click(function () {
+    $(this).fadeOut();
+    $("#SOwindow").fadeOut();
+});
