@@ -1,5 +1,6 @@
-let isEven  = function(x) { // noinspection JSBitwiseOperatorUsage
-    return !( x & 1 ); };
+let isEven = function (x) { // noinspection JSBitwiseOperatorUsage
+    return !(x & 1);
+};
 
 // noinspection JSUnusedGlobalSymbols
 function codeFromPage(args) {
@@ -8,29 +9,29 @@ function codeFromPage(args) {
 
 function getArrOfPages(args) {
     let pages = args;
-    pages = pages.replace(/ /gi,'');
-    if (/[^0-9,\-]/.test(pages)){
+    pages = pages.replace(/ /gi, '');
+    if (/[^0-9,\-]/.test(pages)) {
         console.log('ERROR!!! function codeFromPage get wrong parameter: ' + pages);
     }
     pages = pages.split(',');
     let arrPages = [];
     for (let i = 0; i < pages.length; i++) {
-        if (/-/.test(pages[i])){
+        if (/-/.test(pages[i])) {
             let fromTo = pages[i].split('-');
-            if(!isEven(fromTo[0])){
-                fromTo[0] --;
+            if (!isEven(fromTo[0])) {
+                fromTo[0]--;
             }
-            if(!isEven(fromTo[1])){
-                fromTo[1] --;
+            if (!isEven(fromTo[1])) {
+                fromTo[1]--;
             }
             for (let j = Number(fromTo[0]); j <= Number(fromTo[1]); j = j + 2) {
                 arrPages.push(j);
             }
         } else {
-            if (isEven(Number(pages[i]))){
+            if (isEven(Number(pages[i]))) {
                 arrPages.push(Number(pages[i]));
             } else {
-                arrPages.push(pages[i]-1);
+                arrPages.push(pages[i] - 1);
             }
         }
     }
@@ -47,8 +48,15 @@ function getCodeFromDb(arr) {
                     codes.push(docs[i].shade[j]);
                 }
             }
-            // todo What is fsc in shades???
         }
     });
     return codes
+}
+
+function findAllExeptPage(page) {
+    let temp = [];
+    db.find({$not: {fsc: {$in: codeFromPage(page)}}}, {_id: 0, fsc: 1}, function (err, docs) {
+        temp.push(docs);
+    });
+    return temp
 }
