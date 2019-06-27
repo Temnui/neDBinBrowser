@@ -1,6 +1,11 @@
 .SOwindow {
     width: 950px;
-    margin: 0 auto;
+    position: absolute;
+    overflow: auto;
+    height: 90%;
+    padding-top: 50px;
+    left: 0;
+    background-color: white;
 }
 /**Отсюда начинай копировать CSS**/
 
@@ -62,8 +67,8 @@
 
 .e-store-pop-cart-item-img img {
     width: 100%;
+    height: 67px;
     display: table;
-;
     margin: 4px auto 0 auto;
 }
 

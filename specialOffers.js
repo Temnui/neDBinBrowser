@@ -186,18 +186,28 @@ function showPopupSO() {
 
     for (let key in listOfOffers) {
         if (listOfOffers.hasOwnProperty(key)) {
-            document.getElementById('SOwindow').innerHTML = '';
+
             for (let i = 0; i < specialOffers.length; i++) {
                 // noinspection EqualityComparisonWithCoercionJS
                 if (key == specialOffers[i].name) {
                     db.find({fsc: {$in: specialOffers[i].range}}, function (err, docs) {
                         console.log('We get:');
                         console.log(docs);
+                        document.getElementById('SOwindow').innerHTML = '';
                         listOfSOProducts[listOfOffers[key]] = docs;
+                        let header = 'blank';
+                        let footer = 'blank';
+                        for (let j = 0; j < specialOffers.length; j++) {
+                                    // noinspection EqualityComparisonWithCoercionJS
+                                if (specialOffers[j].name == key) {
+                                        header = specialOffers[j].description;
+                                        footer = specialOffers[j].footer;
+                                }
+                        }
                         for (let key in listOfSOProducts) {
                             if (listOfSOProducts.hasOwnProperty(key)) {
                                 console.log('begin gen');
-                                document.getElementById('SOwindow').innerHTML += generateSOcontent(listOfOffers[key].description, listOfSOProducts[key], listOfOffers[key].footer);
+                                document.getElementById('SOwindow').innerHTML += generateSOcontent(header, listOfSOProducts[key], footer);
                             }
                         }
                     });
@@ -214,6 +224,9 @@ let listOfSOProducts = {};
 
 function displaySO() {
     $("#popupAboutSO").fadeOut("slow", function () {
+        // done
+    });
+    $("#popupMessageOverlay").fadeIn("slow", function () {
         // done
     });
     document.getElementById('popupMessageOverlay').style.display = 'block';
@@ -270,3 +283,19 @@ function generateSOcontent(header, products, footer) {
     return elemHeader + elemContent + elemFooter;
 }
 
+function addSOtoOrder(fsc) {
+    for (let i = 0; i < 49; i++) {
+        // noinspection EqualityComparisonWithCoercionJS
+        if (document.getElementById('newItems[' + i + '].linenumber').value == '') {
+            document.getElementById('newItems[' + i + '].linenumber').value = fsc;
+            document.getElementById('newItems[' + i + '].quantity').value = 1;
+            $("#popupMessageOverlay").fadeOut("slow", function () {
+                // done
+            });
+            $("#SOwindow").fadeOut("slow", function () {
+                // done
+            });
+            break
+        }
+    }
+}
