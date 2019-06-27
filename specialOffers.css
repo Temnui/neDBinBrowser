@@ -1,0 +1,144 @@
+.SOwindow {
+    width: 950px;
+    margin: 0 auto;
+}
+/**Отсюда начинай копировать CSS**/
+
+.specical-text {
+    font-size: 12px;
+    float: right;
+    max-width: 70%;
+    margin: 10px 0 0 0;
+    opacity: 0.5;
+    line-height: 1.3;
+}
+
+.e-store-pop-cart-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 30px 30px 15px 30px;
+    color: #000;
+    line-height: 1.3;
+}
+
+.e-store-pop-cart-title div {
+    font-size: 14px;
+    font-weight: 400;
+    margin: 5px 0 0 0;
+}
+
+.e-store-pop-cart {
+    border-bottom: 1px solid #f1f1f1;
+    color: #000;
+}
+
+.e-store-pop-cart {}
+
+.e-store-pop-cart-item {
+    background: #fff;
+    border-top: 1px solid #f1f1f1;
+    padding: 12px 0;
+    overflow: hidden;
+}
+
+.e-store-pop-cart-item-num {
+    float: left;
+    width: 8%;
+    text-align: center;
+}
+
+.e-store-pop-cart-item-num span {
+    display: inline-block;
+    margin: 25px 0 0 0;
+    padding: 0 22px;
+    border-right: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.e-store-pop-cart-item-img {
+    float: left;
+    width: 7%;
+}
+
+.e-store-pop-cart-item-img img {
+    width: 100%;
+    display: table;
+;
+    margin: 4px auto 0 auto;
+}
+
+.e-store-pop-cart-item-name {
+    float: left;
+    width: 45%;
+    position: relative;
+    padding: 10px 0 0 0;
+}
+
+.e-store-pop-cart-item-middle {
+    padding: 0 10px 0 10px;
+    margin: 0 20px 0 0;
+}
+
+.e-store-pop-cart-item-middle span {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.e-store-pop-cart-item-middle div {
+    padding: 5px 0 0 0;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.e-store-pop-cart-item-middle div select {
+    outline: none;
+}
+
+.e-store-pop-cart-item-calc {
+    float: left;
+    width: 20%;
+}
+
+.e-store-pop-cart-item-calc .e-store-select-number-l {
+    margin: 18px 0 0 0;
+}
+
+.e-store-pop-cart-item-price {
+    float: left;
+    width: 13%;
+    text-align: center;
+}
+
+.e-store-pop-cart-item-price span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.e-store-pop-cart-item-price div {
+    margin: 12px 0 5px 0;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.e-store-pop-cart-item-delete {
+    float: left;
+    width: 27%;
+}
+
+.e-store-pop-cart-item-delete a {
+    text-decoration: none;
+    color: #fff;
+    background: #ed008c;
+    padding: 10px 20px;
+    float: right;
+    display: inline-block;
+    margin: 18px 0 0 0;
+    border: 1px solid #fff;
+}
+
+.e-store-pop-cart-item-delete a:hover {
+    border-color: #ed008c;
+    color: #ed008c;
+    background: #fff;
+}

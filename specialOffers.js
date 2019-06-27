@@ -2,6 +2,8 @@ let listOfOffers = {};
 let specialOffers = [
     {
         "name": "lipstick",
+        "description": "descriptionLipstick",
+        "footer": "footerLipstick",
         "condition": "page",
         "conditionQuantity": "2",
         "range": ["67577", "67577", "67570", "68098", "68098", "28728", "23207", "68848", "27175", "23171", "27578", "29297", "26941", "26927", "26873", "27826", "27714", "27769", "23415", "63158", "63158", "63160", "63156", "63198", "63603", "63159", "63155", "65671", "65679", "65510", "65379", "63402", "63604", "65669", "65673", "64733", "63526", "63154", "65632", "65632", "27313", "27135", "27107", "27106", "25870", "65633", "25347", "25726", "25308", "25349", "27137", "25104", "64903", "64903", "64935", "65215", "64858", "64873", "64874", "65036", "65164", "65163", "65455", "64934", "64697", "45153", "45153", "39013", "38995", "39015", "44957", "44955", "65317", "25061", "25061", "24095", "65925", "65925", "65820", "65619", "69005", "76923", "69095", "68857", "64669", "65037"],
@@ -9,11 +11,21 @@ let specialOffers = [
 
     }, {
         "name": "life",
+        "description": "descriptionLipstick",
+        "footer": "footerLipstick",
         "range": ["11510", "12349", "11865", "15499"]
     },
     {
         "name": "wowFR",
+        "description": "descriptionLipstick",
+        "footer": "footerLipstick",
         "range": ["41908", "82271", "99194", "26594", "51609", "36419", "34116", "18397", "92070", "75678", "26640", "11967", "55144", "73469", "18973", "27537", "26371"]
+    },
+    {
+        "name": "wowPrice",
+        "description": "descriptionLipstick",
+        "footer": "footerLipstick",
+        "range": ["29262", "31825", "64238", "18277", "17730", "17867", "41494", "43736", "26635", "79707", "45620", "77960", "25679", "08395", "19986", "78040", "89850", "14516", "40051", "74951", "01867", "68379", "36770", "94211", "60933", "14572"]
     }
 ];
 
@@ -100,11 +112,33 @@ function checkCodesForSO() {
             //avon life
             for (let j = 0; j < specialOffers[1].range.length; j++) {
                 // noinspection EqualityComparisonWithCoercionJS
-                if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[1].range[j]) {
+                if (document.getElementById('newItems[' + i + '].linenumber').value != specialOffers[1].range[j]) {
                     counter++;
                     if (counter > 0) {
                         flag = true;
                         listOfOffers[specialOffers[1].name] = specialOffers[1].name;
+                    }
+                }
+            }
+            //wowFR
+            for (let j = 0; j < specialOffers[2].range.length; j++) {
+                // noinspection EqualityComparisonWithCoercionJS
+                if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[2].range[j]) {
+                    counter++;
+                    if (counter > 1) {
+                        flag = true;
+                        listOfOffers[specialOffers[2].name] = specialOffers[2].name;
+                    }
+                }
+            }
+            //wowPrice
+            for (let j = 0; j < specialOffers[3].range.length; j++) {
+                // noinspection EqualityComparisonWithCoercionJS
+                if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[3].range[j]) {
+                    counter++;
+                    if (counter > 1) {
+                        flag = true;
+                        listOfOffers[specialOffers[3].name] = specialOffers[3].name;
                     }
                 }
             }
@@ -124,32 +158,68 @@ if (page('orderEntry')) {
     popupAboutSO.style.display = "none";
     popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\" style=\"position: fixed; color: white; bottom: 0; z-index: 600; height: 40px; width: 100%; background-color: black; text-align: center\">We have special offer for You, <a href=\"#/\" onclick=\"displaySO();\">check it out >></a></div>";
     document.body.insertBefore(popupAboutSO, document.body.firstChild);
+
+    //SOwindow
+    let SOwindow = document.createElement('div');
+    SOwindow.id = "popupMessageOverlay";
+    SOwindow.className = "SOwindow";
+    SOwindow.style.display = "none";
+    SOwindow.innerHTML = "<div id=\"SOwindow\" class=\"SOwindow\"></div>";
+    document.body.insertBefore(SOwindow, document.body.firstChild);
+
+    cssId = 'myCss';
+    if (!document.getElementById(cssId))
+    {
+        let head  = document.getElementsByTagName('head')[0];
+        let link  = document.createElement('link');
+        link.id   = cssId;
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://www.avon.com.ua/REPSuite/static/css/specialOffers.css';
+        link.media = 'all';
+        head.appendChild(link);
+    }
 }
 
 function showPopupSO() {
     console.log(listOfOffers);
-    $("#popupAboutSO").fadeIn("slow", function () {
-        // done
-    });
-}
 
-function displaySO() {
-    $("#popupAboutSO").fadeOut("slow", function () {
-        // done
-    });
     for (let key in listOfOffers) {
         if (listOfOffers.hasOwnProperty(key)) {
+            document.getElementById('SOwindow').innerHTML = '';
             for (let i = 0; i < specialOffers.length; i++) {
                 // noinspection EqualityComparisonWithCoercionJS
                 if (key == specialOffers[i].name) {
                     db.find({fsc: {$in: specialOffers[i].range}}, function (err, docs) {
                         console.log('We get:');
                         console.log(docs);
+                        listOfSOProducts[listOfOffers[key]] = docs;
+                        for (let key in listOfSOProducts) {
+                            if (listOfSOProducts.hasOwnProperty(key)) {
+                                console.log('begin gen');
+                                document.getElementById('SOwindow').innerHTML += generateSOcontent(listOfOffers[key].description, listOfSOProducts[key], listOfOffers[key].footer);
+                            }
+                        }
                     });
                 }
             }
         }
     }
+    $("#popupAboutSO").fadeIn("slow", function () {
+        // done
+    });
+}
+
+let listOfSOProducts = {};
+
+function displaySO() {
+    $("#popupAboutSO").fadeOut("slow", function () {
+        // done
+    });
+    document.getElementById('popupMessageOverlay').style.display = 'block';
+    $("#SOwindow").fadeIn("slow", function () {
+        // done
+    });
 }
 
 for (let i = 0; i < 49; i++) {
@@ -161,3 +231,42 @@ $("#divBioBottom1 > p > input").focusout(function(){
     checkCodesForSO();
     console.log('fucus out');
 });*/
+
+//html
+
+function generateSOcontent(header, products, footer) {
+    console.log('products: ');
+    console.log(products);
+    let elemHeader = '<div class="all-specical-offers-div">\n' +
+        '            <div class="e-store-pop-cart-title">' + header + '</div>';
+    let elemContent = '';
+    for (let i = 0; i < products.length; i++) {
+        elemContent += '<div class="e-store-pop-cart">            <div class="e-store-pop-cart-item">            <div class="e-store-pop-cart-item-num">            <span>1</span>' +
+            '                    </div>\n' +
+            '                    <div class="e-store-pop-cart-item-img">\n' +
+            '                        <img alt="" src="' + products[i].urlImg + '">\n' +
+            '                    </div>\n' +
+            '                    <div class="e-store-pop-cart-item-name">\n' +
+            '                        <div class="e-store-pop-cart-item-middle">\n' +
+            '                            <span>' + products[i].name + '</span>\n' +
+            '                            <div><select>\n' +
+            '                            <option>Выбрать шейд</option>\n' +
+            '                            <option>1</option>\n' +
+            '                        </select></div>\n' +
+            '                        </div>\n' +
+            '                    </div>\n' +
+            '\n' +
+            '                    <div class="e-store-pop-cart-item-price">\n' +
+            '                        <div>' + products[i].price + ' грн</div><span>' + products[i].oldPrice + ' грн</span>\n' +
+            '                    </div>\n' +
+            '                    <div class="e-store-pop-cart-item-delete">\n' +
+            '                        <a href="#" onclick="addSOtoOrder(\'' + products[i].fsc + '\')">Додати до замовлення</a>\n' +
+            '                    </div>\n' +
+            '                </div>\n' +
+            '            </div>';
+    }
+    let elemFooter = '<div class="specical-text">\n' + footer +
+        '            </div>';
+    return elemHeader + elemContent + elemFooter;
+}
+
