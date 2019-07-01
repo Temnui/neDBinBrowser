@@ -93,6 +93,15 @@ function findAllExeptPage(page) {
 }
 
 function checkCodesForSO() {
+    //check for promo-codes
+    let promoCoutner = 0;
+    for (let i = 0; i < 49; i++) {
+        if (document.getElementById('newItems[' + i + '].linenumber').value == '12345') {
+                document.getElementById('newItems[' + i + '].linenumber').value = '';
+                alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
+        }
+    }
+    // check for special offer
     console.log('fucus out');
     let flag = false;
     let counter = 0;
@@ -287,7 +296,7 @@ function generateSOcontent(header, products, footer) {
     return elemHeader + elemContent + elemFooter;
 }
 
-function addSOtoOrder(fsс) { //todo rep number price
+function addSOtoOrder(fsc) { //todo rep number price
     for (let i = 0; i < 49; i++) {
         // noinspection EqualityComparisonWithCoercionJS
         if (document.getElementById('newItems[' + i + '].linenumber').value == '') {
