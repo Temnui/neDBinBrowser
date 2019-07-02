@@ -1,4 +1,5 @@
 let listOfOffers = {};
+let test = ''; // todo remove on prod
 let specialOffers = [
     {
         "name": "lipstick",
@@ -11,20 +12,20 @@ let specialOffers = [
 
     }, {
         "name": "life",
-        "description": "descriptionLipstick",
-        "footer": "footerLipstick",
+        "description": "life",
+        "footer": "footerLife",
         "range": ["11510", "12349", "11865", "15499"]
     },
     {
         "name": "wowFR",
-        "description": "descriptionLipstick",
-        "footer": "footerLipstick",
+        "description": "wowFR",
+        "footer": "wowFR",
         "range": ["41908", "82271", "99194", "26594", "51609", "36419", "34116", "18397", "92070", "75678", "26640", "11967", "55144", "73469", "18973", "27537", "26371"]
     },
     {
         "name": "wowPrice",
-        "description": "descriptionLipstick",
-        "footer": "footerLipstick",
+        "description": "wowPrice",
+        "footer": "wowPrice",
         "range": ["29262", "31825", "64238", "18277", "17730", "17867", "41494", "43736", "26635", "79707", "45620", "77960", "25679", "08395", "19986", "78040", "89850", "14516", "40051", "74951", "01867", "68379", "36770", "94211", "60933", "14572"]
     }
 ];
@@ -84,6 +85,7 @@ function getCodeFromDb(arr) {
     return codes
 }
 
+// noinspection JSUnusedGlobalSymbols
 function findAllExeptPage(page) {
     let temp = [];
     db.find({$not: {fsc: {$in: codeFromPage(page)}}}, {_id: 0, fsc: 1}, function (err, docs) {
@@ -92,17 +94,17 @@ function findAllExeptPage(page) {
     return temp
 }
 
+// noinspection JSUnusedGlobalSymbols
 function checkCodesForSO() {
     //check for promo-codes
-    let promoCoutner = 0;
     for (let i = 0; i < 49; i++) {
+        // noinspection EqualityComparisonWithCoercionJS
         if (document.getElementById('newItems[' + i + '].linenumber').value == '12345') {
                 document.getElementById('newItems[' + i + '].linenumber').value = '';
                 alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
         }
     }
     // check for special offer
-    console.log('fucus out');
     let flag = false;
     let counter = 0;
     for (let i = 0; i < 49; i++) {
@@ -155,7 +157,6 @@ function checkCodesForSO() {
     }
     if (flag) {
         localStorage.setItem("showPopupWithSO", "true");
-        localStorage.setItem("listOfOffers", listOfOffers);
         showPopupSO()
     }
 }
@@ -165,7 +166,7 @@ if (page('orderEntry')) {
     popupAboutSO.id = "popupAboutSO";
     popupAboutSO.className = "popupAboutSO";
     popupAboutSO.style.display = "none";
-    popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\" style=\"position: fixed; color: white; bottom: 0; z-index: 600; height: 40px; width: 100%; background-color: black; text-align: center\">We have special offer for You, <a href=\"#/\" onclick=\"displaySO();\">check it out >></a></div>";
+    popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\" style=\"position: fixed; color: white; bottom: 0; z-index: 600; height: 40px; width: 100%; background-color: black; text-align: center\">We have special offer for You, <!--suppress HtmlUnknownAnchorTarget --><a href=\"#/\" onclick=\"displaySO();\">check it out >></a></div>";
     document.body.insertBefore(popupAboutSO, document.body.firstChild);
 
     //SOwindow
@@ -191,17 +192,12 @@ if (page('orderEntry')) {
 }
 
 function showPopupSO() {
-    console.log(listOfOffers);
-
     for (let key in listOfOffers) {
         if (listOfOffers.hasOwnProperty(key)) {
-
             for (let i = 0; i < specialOffers.length; i++) {
                 // noinspection EqualityComparisonWithCoercionJS
                 if (key == specialOffers[i].name) {
                     db.find({fsc: {$in: specialOffers[i].range}}, function (err, docs) {
-                        console.log('We get:');
-                        console.log(docs);
                         document.getElementById('SOwindow').innerHTML = '';
                         listOfSOProducts[listOfOffers[key]] = docs;
                         let header = 'blank';
@@ -209,14 +205,15 @@ function showPopupSO() {
                         for (let j = 0; j < specialOffers.length; j++) {
                                     // noinspection EqualityComparisonWithCoercionJS
                                 if (specialOffers[j].name == key) {
-                                        header = specialOffers[j].description;
-                                        footer = specialOffers[j].footer;
+                                    listOfSOProducts[key].header = specialOffers[j].description;
+                                    listOfSOProducts[key].footer = specialOffers[j].footer;
                                 }
                         }
                         for (let key in listOfSOProducts) {
                             if (listOfSOProducts.hasOwnProperty(key)) {
-                                console.log('begin gen');
-                                document.getElementById('SOwindow').innerHTML += generateSOcontent(header, listOfSOProducts[key], footer);
+                                console.log('listOfSOProducts[key]');
+                                console.log(listOfSOProducts[key]);
+                                document.getElementById('SOwindow').innerHTML += generateSOcontent(listOfSOProducts[key].header, listOfSOProducts[key], listOfSOProducts[key].footer);
                             }
                         }
                     });
@@ -257,19 +254,28 @@ $("#divBioBottom1 > p > input").focusout(function(){
 //html
 
 function getShadeFscDesc(prod){
-    for (let i = 0; i < prod.shade.length; i++) {
-
+    let elem = '';
+    if (prod.hasOwnProperty('shade')) {
+        test = prod.shadeDesc;
+        for (let key in prod.shadeDesc) {
+            if (prod.shadeDesc.hasOwnProperty(key)) {
+                elem += '<option value="' + key + '">' + prod.shadeDesc[key] + '</option>';
+            }
+        }
+    } else {
+        elem = '<option value="'+ prod.fsc +'">'+ prod.name +'</option>';
     }
+    return elem;
 }
 
 function generateSOcontent(header, products, footer) {
-    console.log('products: ');
-    console.log(products);
+    let tempHeader = header.toString();
+    let tempFooter = footer.toString();
     let elemHeader = '<div class="all-specical-offers-div">\n' +
-        '            <div class="e-store-pop-cart-title">' + header + '</div>';
+        '            <div class="e-store-pop-cart-title">' + tempHeader + '</div>';
     let elemContent = '';
     for (let i = 0; i < products.length; i++) {
-        elemContent += '<div class="e-store-pop-cart">            <div class="e-store-pop-cart-item">            <div class="e-store-pop-cart-item-num">            <span>1</span>' +
+        elemContent += '<div class="e-store-pop-cart" id="id' + products[i].fsc + '">            <div class="e-store-pop-cart-item">            <div class="e-store-pop-cart-item-num">            <span>' + i+1 + '</span>' +
             '                    </div>\n' +
             '                    <div class="e-store-pop-cart-item-img">\n' +
             '                        <img alt="" src="' + products[i].urlImg + '">\n' +
@@ -277,7 +283,7 @@ function generateSOcontent(header, products, footer) {
             '                    <div class="e-store-pop-cart-item-name">\n' +
             '                        <div class="e-store-pop-cart-item-middle">\n' +
             '                            <span>' + products[i].name + '</span>\n' +
-            '                            <div><select>\n' + getShadeFscDesc(products[i]) +
+            '                            <div><select onchange="changeFscOnButton(' +products[i].fsc +',this.options[this.selectedIndex].value)">\n' + getShadeFscDesc(products[i]) +
             '                        </select></div>\n' +
             '                        </div>\n' +
             '                    </div>\n' +
@@ -286,14 +292,18 @@ function generateSOcontent(header, products, footer) {
             '                        <div>' + products[i].price + ' грн</div><span>' + products[i].oldPrice + ' грн</span>\n' +
             '                    </div>\n' +
             '                    <div class="e-store-pop-cart-item-delete">\n' +
-            '                        <a href="#" onclick="addSOtoOrder(\'' + products[i].fsc + '\')">Додати до замовлення</a>\n' +
+            '                        <a href="#" id="button' + products[i].fsc + '" onclick="addSOtoOrder(\'' + products[i].fsc + '\')">Додати до замовлення</a>\n' +
             '                    </div>\n' +
             '                </div>\n' +
             '            </div>';
     }
-    let elemFooter = '<div class="specical-text">\n' + footer +
+    let elemFooter = '<div class="specical-text">\n' + tempFooter +
         '            </div>';
     return elemHeader + elemContent + elemFooter;
+}
+
+function changeFscOnButton(fsc, value) {
+    document.getElementById('button'+fsc).outerHTML = '<a href="#" id="button' + fsc + '" onclick="addSOtoOrder(\'' + value + '\')">Додати до замовлення</a>';
 }
 
 function addSOtoOrder(fsc) { //todo rep number price
