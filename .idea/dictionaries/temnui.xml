@@ -2,6 +2,7 @@
   <dictionary name="temnui">
     <words>
       <w>autoload</w>
+      <w>exept</w>
       <w>linenumber</w>
       <w>nedb</w>
       <w>ocontent</w>

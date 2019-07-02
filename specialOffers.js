@@ -200,8 +200,6 @@ function showPopupSO() {
                     db.find({fsc: {$in: specialOffers[i].range}}, function (err, docs) {
                         document.getElementById('SOwindow').innerHTML = '';
                         listOfSOProducts[listOfOffers[key]] = docs;
-                        let header = 'blank';
-                        let footer = 'blank';
                         for (let j = 0; j < specialOffers.length; j++) {
                                     // noinspection EqualityComparisonWithCoercionJS
                                 if (specialOffers[j].name == key) {
@@ -248,7 +246,7 @@ for (let i = 0; i < 49; i++) {
 /*
 $("#divBioBottom1 > p > input").focusout(function(){
     checkCodesForSO();
-    console.log('fucus out');
+    console.log('focus out');
 });*/
 
 //html
