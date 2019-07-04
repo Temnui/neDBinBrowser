@@ -99,9 +99,9 @@ function checkCodesForSO() {
     //check for promo-codes
     for (let i = 0; i < 49; i++) {
         // noinspection EqualityComparisonWithCoercionJS
-        if (document.getElementById('newItems[' + i + '].linenumber').value == '12345') {
-                document.getElementById('newItems[' + i + '].linenumber').value = '';
-                alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
+        if (document.getElementById('newItems[' + i + '].linenumber').value == '93176') {
+            document.getElementById('newItems[' + i + '].linenumber').value = '';
+            alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
         }
     }
     // check for special offer
@@ -161,6 +161,7 @@ function checkCodesForSO() {
     }
 }
 
+// noinspection JSUnresolvedFunction
 if (page('orderEntry')) {
     let popupAboutSO = document.createElement('div');
     popupAboutSO.id = "popupAboutSO";
@@ -178,12 +179,11 @@ if (page('orderEntry')) {
     document.body.insertBefore(SOwindow, document.body.firstChild);
 
     cssId = 'myCss';
-    if (!document.getElementById(cssId))
-    {
-        let head  = document.getElementsByTagName('head')[0];
-        let link  = document.createElement('link');
-        link.id   = cssId;
-        link.rel  = 'stylesheet';
+    if (!document.getElementById(cssId)) {
+        let head = document.getElementsByTagName('head')[0];
+        let link = document.createElement('link');
+        link.id = cssId;
+        link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = 'http://www.avon.com.ua/REPSuite/static/css/specialOffers.css';
         link.media = 'all';
@@ -200,12 +200,12 @@ function showPopupSO() {
                     db.find({fsc: {$in: specialOffers[i].range}}, function (err, docs) {
                         document.getElementById('SOwindow').innerHTML = '';
                         listOfSOProducts[listOfOffers[key]] = docs;
-                        for (let j = 0; j < specialOffers.length; j++) {
-                                    // noinspection EqualityComparisonWithCoercionJS
-                                if (specialOffers[j].name == key) {
-                                    listOfSOProducts[key].header = specialOffers[j].description;
-                                    listOfSOProducts[key].footer = specialOffers[j].footer;
-                                }
+                        for (let j = 0; j < specialOffers.length; j++){
+                            // noinspection EqualityComparisonWithCoercionJS
+                            if (specialOffers[j].name == key) {
+                                listOfSOProducts[key].header = specialOffers[j].description;
+                                listOfSOProducts[key].footer = specialOffers[j].footer;
+                            }
                         }
                         for (let key in listOfSOProducts) {
                             if (listOfSOProducts.hasOwnProperty(key)) {
@@ -251,7 +251,7 @@ $("#divBioBottom1 > p > input").focusout(function(){
 
 //html
 
-function getShadeFscDesc(prod){
+function getShadeFscDesc(prod) {
     let elem = '';
     if (prod.hasOwnProperty('shade')) {
         test = prod.shadeDesc;
@@ -261,7 +261,7 @@ function getShadeFscDesc(prod){
             }
         }
     } else {
-        elem = '<option value="'+ prod.fsc +'">'+ prod.name +'</option>';
+        elem = '<option value="' + prod.fsc + '">' + prod.name + '</option>';
     }
     return elem;
 }
@@ -273,7 +273,7 @@ function generateSOcontent(header, products, footer) {
         '            <div class="e-store-pop-cart-title">' + tempHeader + '</div>';
     let elemContent = '';
     for (let i = 0; i < products.length; i++) {
-        elemContent += '<div class="e-store-pop-cart" id="id' + products[i].fsc + '">            <div class="e-store-pop-cart-item">            <div class="e-store-pop-cart-item-num">            <span>' + i+1 + '</span>' +
+        elemContent += '<div class="e-store-pop-cart" id="id' + products[i].fsc + '">            <div class="e-store-pop-cart-item">            <div class="e-store-pop-cart-item-num">            <span>' + i + 1 + '</span>' +
             '                    </div>\n' +
             '                    <div class="e-store-pop-cart-item-img">\n' +
             '                        <img alt="" src="' + products[i].urlImg + '">\n' +
@@ -281,7 +281,7 @@ function generateSOcontent(header, products, footer) {
             '                    <div class="e-store-pop-cart-item-name">\n' +
             '                        <div class="e-store-pop-cart-item-middle">\n' +
             '                            <span>' + products[i].name + '</span>\n' +
-            '                            <div><select onchange="changeFscOnButton(' +products[i].fsc +',this.options[this.selectedIndex].value)">\n' + getShadeFscDesc(products[i]) +
+            '                            <div><select onchange="changeFscOnButton(' + products[i].fsc + ',this.options[this.selectedIndex].value)">\n' + getShadeFscDesc(products[i]) +
             '                        </select></div>\n' +
             '                        </div>\n' +
             '                    </div>\n' +
@@ -301,7 +301,7 @@ function generateSOcontent(header, products, footer) {
 }
 
 function changeFscOnButton(fsc, value) {
-    document.getElementById('button'+fsc).outerHTML = '<a href="#" id="button' + fsc + '" onclick="addSOtoOrder(\'' + value + '\')">Додати до замовлення</a>';
+    document.getElementById('button' + fsc).outerHTML = '<a href="#" id="button' + fsc + '" onclick="addSOtoOrder(\'' + value + '\')">Додати до замовлення</a>';
 }
 
 function addSOtoOrder(fsc) { //todo rep number price
@@ -320,3 +320,13 @@ function addSOtoOrder(fsc) { //todo rep number price
         }
     }
 }
+
+// Get the modal
+let modal = document.getElementById('popupMessageOverlay');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+};
