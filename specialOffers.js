@@ -167,7 +167,7 @@ if (page('orderEntry')) {
     popupAboutSO.id = "popupAboutSO";
     popupAboutSO.className = "popupAboutSO";
     popupAboutSO.style.display = "none";
-    popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\" style=\"position: fixed; color: white; bottom: 0; z-index: 600; height: 40px; width: 100%; background-color: black; text-align: center\">We have special offer for You, <!--suppress HtmlUnknownAnchorTarget --><a href=\"#/\" onclick=\"displaySO();\">check it out >></a></div>";
+    popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\"><p>Умови спеціальних пропозицій виконані! <!--suppress HtmlUnknownAnchorTarget --><a href=\"#/\" onclick=\"displaySO();\">Детальніше >></a></p></div>";
     document.body.insertBefore(popupAboutSO, document.body.firstChild);
 
     //SOwindow
