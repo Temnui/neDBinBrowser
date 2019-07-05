@@ -2,31 +2,50 @@ let listOfOffers = {};
 let test = ''; // todo remove on prod
 let specialOffers = [
     {
-        "name": "lipstick",
-        "description": "descriptionLipstick",
-        "footer": "footerLipstick",
+        "name": "aroma-proposition",
+        "description": "Ароматна пропозиція",
+        "footer": "*твоя ціна за умови придбання будь-яких 2-х продуктів зі сторінок 34-35",
         "condition": "page",
         "conditionQuantity": "2",
-        "range": ["67577", "67577", "67570", "68098", "68098", "28728", "23207", "68848", "27175", "23171", "27578", "29297", "26941", "26927", "26873", "27826", "27714", "27769", "23415", "63158", "63158", "63160", "63156", "63198", "63603", "63159", "63155", "65671", "65679", "65510", "65379", "63402", "63604", "65669", "65673", "64733", "63526", "63154", "65632", "65632", "27313", "27135", "27107", "27106", "25870", "65633", "25347", "25726", "25308", "25349", "27137", "25104", "64903", "64903", "64935", "65215", "64858", "64873", "64874", "65036", "65164", "65163", "65455", "64934", "64697", "45153", "45153", "39013", "38995", "39015", "44957", "44955", "65317", "25061", "25061", "24095", "65925", "65925", "65820", "65619", "69005", "76923", "69095", "68857", "64669", "65037"],
+        "range": ["16995", "26640", "24190", "26371", "12997", "01851", "34650", "99194"],
         "offer": "page",
 
     }, {
-        "name": "life",
-        "description": "life",
-        "footer": "footerLife",
-        "range": ["11510", "12349", "11865", "15499"]
-    },
-    {
-        "name": "wowFR",
-        "description": "wowFR",
-        "footer": "wowFR",
-        "range": ["41908", "82271", "99194", "26594", "51609", "36419", "34116", "18397", "92070", "75678", "26640", "11967", "55144", "73469", "18973", "27537", "26371"]
-    },
-    {
-        "name": "wowPrice",
-        "description": "wowPrice",
-        "footer": "wowPrice",
-        "range": ["29262", "31825", "64238", "18277", "17730", "17867", "41494", "43736", "26635", "79707", "45620", "77960", "25679", "08395", "19986", "78040", "89850", "14516", "40051", "74951", "01867", "68379", "36770", "94211", "60933", "14572"]
+        "name": "premium-proposition",
+        "description": "Преміум пропозиція",
+        "footer": "Будь-який преміум аромат за СУПЕРЦІНОЮ. *за умови придбання будь-якого іншого продукту з каталогу. На виконання умов спеціальної пропозиції не впливають продукти благодійних програм, пробні зразки та продукти зі стор. 14-15, 44-45, 58, 136-137, 138, 175, 177, 206, 207, 209, 232-233, 234, 235, 236. Ці продукти також можна замовити окремо за повною вартістю.",
+        "condition": "exept",
+        "conditionQuantity": "1",
+        "range": ["25081", "07003", "16830", "90106", "53863", "62062", "17618", "52796", "25542"],
+        "offer": "page",
+
+    }, {
+        "name": "any-fragrance",
+        "description": "Будь-який аромат 30мл, лише за 119,00 грн. Знижка до 60%",
+        "footer": "*за умови придбання будь-якого іншого продукту з каталогу. На виконання умов спеціальної пропозиції не впливають продукти благодійних програм, пробні зразки та продукти зі стор. 14-15, 44-45, 58, 136-137, 138, 175, 177, 206, 207, 209, 232-233, 234, 235, 236. Ці продукти також можна замовити окремо за повною вартістю.",
+        "condition": "exept",
+        "conditionQuantity": "1",
+        "range": ["72835", "07845", "23269", "05084", "09013", "86771"],
+        "offer": "page",
+
+    }, {
+        "name": "special-proposition",
+        "description": "Спеціальна пропозиція!",
+        "footer": "*твоя ціна за умови придбання будь-яких 2-х продуктів зі сторінок 100-101",
+        "condition": "page",
+        "conditionQuantity": "2",
+        "range": ["99620", "99620", "98787", "98089", "98889", "99547", "98542", "99774", "99802", "98922", "99669", "99540", "99539", "98894", "98929", "99575", "98521", "99589", "44520", "99619", "98873", "99736", "98856", "99020", "99478", "99612"],
+        "offer": "page",
+
+    }, {
+        "name": "any-gel",
+        "description": "Будь-який гель для душу, лише за 44,99 грн.",
+        "footer": "*за умови придбання будь-якого іншого продукту з каталогу. На виконання умов спеціальної пропозиції не впливають продукти благодійних програм, пробні зразки та продукти зі стор. 14-15, 44-45, 58, 136-137, 138, 175, 177, 206, 207, 209, 232-233, 234, 235, 236. Ці продукти також можна замовити окремо за повною вартістю.",
+        "condition": "exept",
+        "conditionQuantity": "1",
+        "range": ["16614", "62896"],
+        "offer": "page",
+
     }
 ];
 
@@ -110,46 +129,28 @@ function checkCodesForSO() {
     for (let i = 0; i < 49; i++) {
         if (document.getElementById('newItems[' + i + '].linenumber').value !== '') {
             //lipstick
-            for (let j = 0; j < specialOffers[0].range.length; j++) {
-                // noinspection EqualityComparisonWithCoercionJS
-                if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[0].range[j]) {
-                    counter++;
-                    if (counter > 1) {
-                        flag = true;
-                        listOfOffers[specialOffers[0].name] = specialOffers[0].name;
+            for (let sp = 0; sp < specialOffers.length; sp++) {
+                if (specialOffers[sp].condition === "page") {
+                    for (let j = 0; j < specialOffers[sp].range.length; j++) {
+                        // noinspection EqualityComparisonWithCoercionJS
+                        if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[sp].range[j]) {
+                            counter++;
+                            if (counter > 1) {
+                                flag = true;
+                                listOfOffers[specialOffers[sp].name] = specialOffers[sp].name;
+                            }
+                        }
                     }
-                }
-            }
-            //avon life
-            for (let j = 0; j < specialOffers[1].range.length; j++) {
-                // noinspection EqualityComparisonWithCoercionJS
-                if (document.getElementById('newItems[' + i + '].linenumber').value != specialOffers[1].range[j]) {
-                    counter++;
-                    if (counter > 0) {
-                        flag = true;
-                        listOfOffers[specialOffers[1].name] = specialOffers[1].name;
-                    }
-                }
-            }
-            //wowFR
-            for (let j = 0; j < specialOffers[2].range.length; j++) {
-                // noinspection EqualityComparisonWithCoercionJS
-                if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[2].range[j]) {
-                    counter++;
-                    if (counter > 1) {
-                        flag = true;
-                        listOfOffers[specialOffers[2].name] = specialOffers[2].name;
-                    }
-                }
-            }
-            //wowPrice
-            for (let j = 0; j < specialOffers[3].range.length; j++) {
-                // noinspection EqualityComparisonWithCoercionJS
-                if (document.getElementById('newItems[' + i + '].linenumber').value == specialOffers[3].range[j]) {
-                    counter++;
-                    if (counter > 1) {
-                        flag = true;
-                        listOfOffers[specialOffers[3].name] = specialOffers[3].name;
+                } else if (specialOffers[sp].condition === "exept") {
+                    for (let j = 0; j < specialOffers[0].range.length; j++) {
+                        // noinspection EqualityComparisonWithCoercionJS
+                        if (document.getElementById('newItems[' + i + '].linenumber').value != specialOffers[sp].range[j]) {
+                            counter++;
+                            if (counter > 1) {
+                                flag = true;
+                                listOfOffers[specialOffers[sp].name] = specialOffers[sp].name;
+                            }
+                        }
                     }
                 }
             }
@@ -316,6 +317,12 @@ function addSOtoOrder(fsc) { //todo rep number price
             $("#SOwindow").fadeOut("slow", function () {
                 // done
             });
+            $.post( "https://service.avon.ua/templates/atomic/valtest/specialoffer.php", { rep: username, productFsc: fsc } );
+            /* vanilla request
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "https://service.avon.ua/templates/atomic/valtest/specialoffer.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("rep=" + переменнаяСномеромСчетаРепа + "&fsc=" + переменнаяСкодом);*/
             break
         }
     }

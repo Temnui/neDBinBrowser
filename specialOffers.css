@@ -10,6 +10,10 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.all-specical-offers-div {
+    clear: both;
+}
+
 .popupAboutSO {
     position: fixed;
     color: white;
@@ -17,13 +21,36 @@
     z-index: 600;
     height: 40px;
     width: 100%;
-    background-color: black;
+    background-color: #2da72d;
     text-align: center;
 }
 
 .popupAboutSO p {
     margin-top: 10px;
     font-size: 18px;
+    text-shadow: 2px 2px #009208;
+}
+
+.popupAboutSO p a {
+    color: white;
+    text-decoration: underline;
+    font-size: 18px !important;
+    text-shadow: 2px 1px #009208;
+
+}
+
+.popupAboutSO p a:visited {
+    color: white;
+    text-decoration: underline;
+    font-size: 18px !important;
+
+}
+
+.popupAboutSO p a:hover {
+    color:#ffffff;
+    text-shadow: 2px 2px #006301;
+    text-decoration:none;
+
 }
 
 .SOwindow {
@@ -41,7 +68,7 @@
     font-size: 12px;
     float: right;
     max-width: 70%;
-    margin: 10px 0 0 0;
+    margin: 10px 5px 15px 0;
     opacity: 0.5;
     line-height: 1.3;
 }
@@ -63,6 +90,7 @@
 .e-store-pop-cart {
     border-bottom: 1px solid #f1f1f1;
     color: #000;
+    padding-right: 10px;
 }
 
 .e-store-pop-cart {}
