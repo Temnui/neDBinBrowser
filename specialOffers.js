@@ -118,11 +118,13 @@ function checkCodesForSO() {
     //check for promo-codes
     for (let i = 0; i < 49; i++) {
         // noinspection EqualityComparisonWithCoercionJS
-        if (document.getElementById('newItems[' + i + '].linenumber').value == '93176') {
+        if (document.getElementById('newItems[' + i + '].linenumber').value == '55445' || document.getElementById('newItems[' + i + '].linenumber').value == '26634') {
             document.getElementById('newItems[' + i + '].linenumber').value = '';
             alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
         }
     }
+    // todo we suspend experiment on C11
+    return;
     // check for special offer
     let flag = false;
     let counter = 0;
@@ -168,7 +170,7 @@ if (page('orderEntry')) {
     popupAboutSO.id = "popupAboutSO";
     popupAboutSO.className = "popupAboutSO";
     popupAboutSO.style.display = "none";
-    popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\"><p>Умови спеціальних пропозицій виконані! <!--suppress HtmlUnknownAnchorTarget --><a href=\"#/\" onclick=\"displaySO();\">Детальніше >></a></p></div>";
+    popupAboutSO.innerHTML = "<div id=\"popupAboutSO\" class=\"popupAboutSO\"><p>Умови спеціальних пропозицій виконані! <!--suppress HtmlUnknownAnchorTarget --><a href=\"#/\" onclick=\"displaySO();\">Детальніше</a></p></div>";
     document.body.insertBefore(popupAboutSO, document.body.firstChild);
 
     //SOwindow
@@ -288,7 +290,7 @@ function generateSOcontent(header, products, footer) {
             '                    </div>\n' +
             '\n' +
             '                    <div class="e-store-pop-cart-item-price">\n' +
-            '                        <div>' + products[i].price + ' грн</div><span>' + products[i].oldPrice + ' грн</span>\n' +
+            '                        <div>' + products[i].oldPrice + ' грн</div><span>' + products[i].price + ' грн</span>\n' +
             '                    </div>\n' +
             '                    <div class="e-store-pop-cart-item-delete">\n' +
             '                        <a href="#" id="button' + products[i].fsc + '" onclick="addSOtoOrder(\'' + products[i].fsc + '\')">Додати до замовлення</a>\n' +
