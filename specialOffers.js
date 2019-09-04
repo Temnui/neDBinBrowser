@@ -1,5 +1,6 @@
 let listOfOffers = {};
 let test = ''; // todo remove on prod
+let listOfBlockedFSC = ['34662'];
 let specialOffers = [
     {
         "name": "aroma-proposition",
@@ -91,6 +92,7 @@ function getArrOfPages(args) {
 
 function getCodeFromDb(arr) {
     let codes = [];
+    // noinspection JSUnresolvedFunction
     db.find({page: {$in: arr}}, function (err, docs) {
         for (let i = 0; i < docs.length; i++) {
             codes.push(docs[i].fsc);
@@ -107,6 +109,7 @@ function getCodeFromDb(arr) {
 // noinspection JSUnusedGlobalSymbols
 function findAllExeptPage(page) {
     let temp = [];
+    // noinspection JSUnresolvedFunction
     db.find({$not: {fsc: {$in: codeFromPage(page)}}}, {_id: 0, fsc: 1}, function (err, docs) {
         temp.push(docs);
     });
@@ -118,9 +121,12 @@ function checkCodesForSO() {
     //check for promo-codes
     for (let i = 0; i < 49; i++) {
         // noinspection EqualityComparisonWithCoercionJS
-        if (document.getElementById('newItems[' + i + '].linenumber').value == '55445' || document.getElementById('newItems[' + i + '].linenumber').value == '26634') {
-            document.getElementById('newItems[' + i + '].linenumber').value = '';
-            alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
+        for (let j = 0; j < listOfBlockedFSC.length; j++) {
+            // noinspection EqualityComparisonWithCoercionJS
+            if (document.getElementById('newItems[' + i + '].linenumber').value == listOfBlockedFSC[j]) {
+                document.getElementById('newItems[' + i + '].linenumber').value = '';
+                alert('Цей товар може бути замовлений лише через інтернет-вітрину.');
+            }
         }
     }
     // todo we suspend experiment on C11
@@ -200,6 +206,7 @@ function showPopupSO() {
             for (let i = 0; i < specialOffers.length; i++) {
                 // noinspection EqualityComparisonWithCoercionJS
                 if (key == specialOffers[i].name) {
+                    // noinspection JSUnresolvedFunction
                     db.find({fsc: {$in: specialOffers[i].range}}, function (err, docs) {
                         document.getElementById('SOwindow').innerHTML = '';
                         listOfSOProducts[listOfOffers[key]] = docs;
