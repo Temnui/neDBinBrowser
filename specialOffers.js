@@ -1,6 +1,6 @@
 let listOfOffers = {};
 let test = ''; // todo remove on prod
-let listOfBlockedFSC = ['34662'];
+let listOfBlockedFSC = ['18495'];
 let specialOffers = [
     {
         "name": "aroma-proposition",
